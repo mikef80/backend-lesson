@@ -115,11 +115,11 @@ app.get("/csv", (req, res) => {
 });
 
 // Fetch JSON from public REST API and return HTML
-app.get("/publicAPI", async (req, res) => {
+app.get("/public-api", async (req, res) => {
   const joke = await fetch("https://official-joke-api.appspot.com/random_joke").then(
     (response) => {
       if (!response.ok) {
-        throw new Error("Error!");
+        throw new Error("Error whilst fetching joke!");
       }
       return response.json();
     }
@@ -134,6 +134,57 @@ app.get("/publicAPI", async (req, res) => {
   `;
 
   res.send(html);
+});
+
+// REST API for data filtering/modification
+app.get("/data-filtering", async (req, res) => {
+  const { name, id, email } = req.query;
+
+  let query = "";
+
+  if (name || id || email) query += "?";
+
+  if (name) query += "name=" + name;
+  if (id) query += "id=" + id;
+  if (email) query += "email=" + email;
+
+  const data = await fetch(`https://jsonplaceholder.typicode.com/users${query}`).then(
+    (response) => response.json()
+  );
+
+  res.send(data);
+});
+
+// REST API for data filtering/modification
+app.get("/data-filtering/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const data = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then(
+    (response) => response.json()
+  );
+
+  res.send(data);
+});
+
+// REST API for data filtering/modification
+app.patch("/data-filtering/:id", async (req, res) => {
+  const { name, email } = req.query;
+  const { id } = req.params;
+
+  const patchBody = {};
+
+  if (name) patchBody.name = name;
+  if (email) patchBody.email = email;
+
+  const newData = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(patchBody),
+    headers: { "Content-type": "application/json;charset=UTF-8" },
+  }).then((response) => {
+    return response.json();
+  });
+
+  res.send(newData);
 });
 
 // Start the server

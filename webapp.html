@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="data-div">Loading...</div>
+    <script>
+      const dataDiv = document.getElementById("data-div");
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          dataDiv.innerHTML = JSON.stringify(data,null,2);
+        });
+    </script>
+  </body>
+</html>
