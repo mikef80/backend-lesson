@@ -17,7 +17,22 @@
           return response.json();
         })
         .then((data) => {
-          dataDiv.innerHTML = JSON.stringify(data,null,2);
+          dataDiv.innerHTML = ""; // Clear the loading text
+          data.forEach((user) => {
+            const userCard = document.createElement("div");
+            userCard.className = "user-card";
+
+            userCard.innerHTML = `
+              <h3>${user.name}</h3>
+              <p><strong>Email:</strong> ${user.email}</p>
+              <p><strong>Phone:</strong> ${user.phone}</p>
+              <p><strong>Address:</strong> ${user.address.street}, ${user.address.city}, ${user.address.zipcode}</p>
+              <p><strong>Company:</strong> ${user.company.name}</p>
+              <hr>
+            `;
+
+            dataDiv.appendChild(userCard);
+          });
         });
     </script>
   </body>

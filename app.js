@@ -114,7 +114,7 @@ app.get("/csv", (req, res) => {
   res.send(response);
 });
 
-// Fetch JSON from public REST API and return HTML
+// Fetch JSON from public REST API and return HTML (STRETCH GOAL)
 app.get("/public-api", async (req, res) => {
   const joke = await fetch("https://official-joke-api.appspot.com/random_joke").then(
     (response) => {
@@ -136,7 +136,10 @@ app.get("/public-api", async (req, res) => {
   res.send(html);
 });
 
+// DATA FILTERING
 // REST API for data filtering/modification
+
+// Fetch data and filter by name, id or email
 app.get("/data-filtering", async (req, res) => {
   const { name, id, email } = req.query;
 
@@ -155,7 +158,7 @@ app.get("/data-filtering", async (req, res) => {
   res.send(data);
 });
 
-// REST API for data filtering/modification
+// Fetch data and filter by id (alternative)
 app.get("/data-filtering/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -166,7 +169,7 @@ app.get("/data-filtering/:id", async (req, res) => {
   res.send(data);
 });
 
-// REST API for data filtering/modification
+// Modify data by ID
 app.patch("/data-filtering/:id", async (req, res) => {
   const { name, email } = req.query;
   const { id } = req.params;
