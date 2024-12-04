@@ -11,7 +11,6 @@ app.get("/", (req, res) => {
 // Query Parameter
 app.get("/greeting", (req, res) => {
   const query = req.query;
-  console.log(query, " <--query");
 
   if (query.name) {
     res.send("Hello " + query.name);
@@ -143,13 +142,11 @@ app.get("/public-api", async (req, res) => {
 app.get("/data-filtering", async (req, res) => {
   const { name, id, email } = req.query;
 
-  let query = "";
+  let query;
 
-  if (name || id || email) query += "?";
-
-  if (name) query += "name=" + name;
-  if (id) query += "id=" + id;
-  if (email) query += "email=" + email;
+  if (name) query = "?name=" + name;
+  if (id) query = "?id=" + id;
+  if (email) query = "?email=" + email;
 
   const data = await fetch(`https://jsonplaceholder.typicode.com/users${query}`).then(
     (response) => response.json()
