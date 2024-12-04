@@ -142,7 +142,7 @@ app.get("/public-api", async (req, res) => {
 app.get("/data-filtering", async (req, res) => {
   const { name, id, email } = req.query;
 
-  let query;
+  let query = "";
 
   if (name) query = "?name=" + name;
   if (id) query = "?id=" + id;
